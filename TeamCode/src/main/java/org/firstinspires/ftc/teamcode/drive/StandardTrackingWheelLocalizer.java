@@ -31,12 +31,12 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
     public static double WHEEL_RADIUS = 1.771655; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double LATERAL_DISTANCE = 16.125; // in; distance between the left and right wheels
-    public static double FORWARD_OFFSET = 2.5; // in; offset of the lateral wheel
+    public static double LATERAL_DISTANCE = 16.31498; // in; distance between the left and right wheels
+    public static double FORWARD_OFFSET = 3; // in; offset of the lateral wheel
 
     private Encoder odoRY, odoLY, odoX;
-    public static double X_MULTIPLIER = 1; // Multiplier in the X direction
-    public static double Y_MULTIPLIER = 1; // Multiplier in the Y direction
+    public static double X_MULTIPLIER = 0.98993972691; // Multiplier in the X direction
+    public static double Y_MULTIPLIER = 0.99617537744; // Multiplier in the Y direction
 
     public StandardTrackingWheelLocalizer(HardwareMap hardwareMap) {
         super(Arrays.asList(
@@ -45,12 +45,17 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
                 new Pose2d(FORWARD_OFFSET, 0, Math.toRadians(90)) // front
         ));
 
-        odoRY = new Encoder(hardwareMap.get(DcMotorEx.class, "rightf"));
-        odoLY = new Encoder(hardwareMap.get(DcMotorEx.class, "ringPickup2"));
+        odoRY = new Encoder(hardwareMap.get(DcMotorEx.class, "ringPickup2"));
+        odoLY = new Encoder(hardwareMap.get(DcMotorEx.class, "rightf"));
         odoX = new Encoder(hardwareMap.get(DcMotorEx.class, "ringPickup"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
 
+        odoRY.setDirection(Encoder.Direction.FORWARD);
+
+        odoX.setDirection(Encoder.Direction.REVERSE);
+
+        odoLY.setDirection(Encoder.Direction.REVERSE);
 
         //////////////////////////////////////////
 
