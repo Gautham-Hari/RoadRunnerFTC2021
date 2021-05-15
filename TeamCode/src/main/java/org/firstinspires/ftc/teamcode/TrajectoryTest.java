@@ -29,6 +29,7 @@
 
 package  org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -91,14 +92,25 @@ public class TrajectoryTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        SampleMecanumDrive mecanumDrive = new SampleMecanumDrive(hardwareMap);
-        // run until the end of the match (driver presses STOP)
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         waitForStart();
 
-        Trajectory dropOffWobbleGoal = mecanumDrive.trajectoryBuilder(new Pose2d(0,0,0))
-                .forward(100)
+        if (isStopRequested()) return;
+        Pose2d startPose = new Pose2d(-60, 25, Math.toRadians(0));
+        drive.setPoseEstimate(startPose);
+        Trajectory traj = drive.trajectoryBuilder(startPose)
+                .strafeRight(3)
                 .build();
-        mecanumDrive.followTrajectory(dropOffWobbleGoal);
+
+        drive.followTrajectory(traj);
+
+        sleep(2000);
+
+        drive.followTrajectory(
+                drive.trajectoryBuilder(traj.end(), true)
+                        .splineTo(new Vector2d(0, 0), Math.toRadians(180))
+                        .build()
+        );
     }
 }

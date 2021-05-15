@@ -27,13 +27,9 @@ public class StrafeTest extends LinearOpMode {
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .strafeRight(DISTANCE)
                 .build();
-
         waitForStart();
-
         if (isStopRequested()) return;
-
         drive.followTrajectory(trajectory);
-
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());
         telemetry.addData("finalY", poseEstimate.getY());

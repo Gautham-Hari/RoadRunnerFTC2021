@@ -60,8 +60,8 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
  */
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(30, 0, 1);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(16, 0, 1);
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -136,10 +136,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftf = hardwareMap.get(DcMotorEx.class, "leftf");
-        leftb = hardwareMap.get(DcMotorEx.class, "leftb");
-        rightb = hardwareMap.get(DcMotorEx.class, "rightb");
-        rightf = hardwareMap.get(DcMotorEx.class, "rightf");
+        rightf = hardwareMap.get(DcMotorEx.class, "leftf");
+        rightb = hardwareMap.get(DcMotorEx.class, "leftb");
+        leftb = hardwareMap.get(DcMotorEx.class, "rightb");
+        leftf = hardwareMap.get(DcMotorEx.class, "rightf");
 
         motors = Arrays.asList(leftf, leftb, rightb, rightf);
 
@@ -160,10 +160,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        rightf.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightb.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftf.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftb.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftf.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftb.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightf.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightb.setDirection(DcMotorSimple.Direction.FORWARD);
         // TODO: if desired, use setLocalizer() to change the localization method
         setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
 
