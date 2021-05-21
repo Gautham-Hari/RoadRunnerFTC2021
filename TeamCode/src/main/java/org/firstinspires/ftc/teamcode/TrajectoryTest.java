@@ -97,20 +97,34 @@ public class TrajectoryTest extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-        Pose2d startPose = new Pose2d(-60, 25, Math.toRadians(0));
+        Pose2d startPose = new Pose2d(-60, 25.5, Math.toRadians(0));
         drive.setPoseEstimate(startPose);
+//        Trajectory traj = drive.trajectoryBuilder(startPose)
+//                .splineTo(new Vector2d(-5,5),Math.toRadians(0))
+//                .build();
+//        Trajectory strafe = drive.trajectoryBuilder(traj.end())
+//                .strafeLeft(3)
+//                .build();
+
         Trajectory traj = drive.trajectoryBuilder(startPose)
-                .strafeRight(3)
+                .splineToConstantHeading(new Vector2d(-5,5),Math.toRadians(0))
+                .build();
+        Trajectory strafe = drive.trajectoryBuilder(traj.end())
+                .strafeLeft(10)
+                .build();
+        Trajectory strafe1 = drive.trajectoryBuilder(strafe.end())
+                .strafeLeft(30)
                 .build();
 
+
+
+
         drive.followTrajectory(traj);
+        sleep(1000);
+        drive.followTrajectory(strafe);
+        sleep(1000);
+        drive.followTrajectory(strafe1);
 
-        sleep(2000);
-
-        drive.followTrajectory(
-                drive.trajectoryBuilder(traj.end(), true)
-                        .splineTo(new Vector2d(0, 0), Math.toRadians(180))
-                        .build()
-        );
+        stop();
     }
 }
