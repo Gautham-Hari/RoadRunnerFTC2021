@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -93,6 +94,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     private LinkedList<Pose2d> poseHistory;
 
     private DcMotorEx leftf, leftb, rightb, rightf;
+    public DcMotorEx wobbleGoalArm;
+    public Servo wobbleGripL, wobbleGripR;
     private List<DcMotorEx> motors;
     private BNO055IMU imu;
 
@@ -140,6 +143,14 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightb = hardwareMap.get(DcMotorEx.class, "leftb");
         leftb = hardwareMap.get(DcMotorEx.class, "rightb");
         leftf = hardwareMap.get(DcMotorEx.class, "rightf");
+        wobbleGoalArm = hardwareMap.get(DcMotorEx.class, "wobbleArm");
+
+        wobbleGripL = hardwareMap.get(Servo.class, "leftGrip");
+        wobbleGripR = hardwareMap.get(Servo.class, "rightGrip");
+
+
+
+
 
         motors = Arrays.asList(leftf, leftb, rightb, rightf);
 
